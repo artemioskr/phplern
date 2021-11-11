@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  nginx:
+    build: etc/docker/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./etc/docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./:/var/app
+      #- ./var/log/nginx:/var/log/nginx/
+    links:
+      - app
+
+  postgres:
+    build: etc/docker/postgres
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: 123
+    volumes:
+      - "./var/dist/postgres:/var/lib/postgresql/data"
+
+  app:
+    build: etc/docker/php
+    volumes:
+      - ./:/var/app
+      - ./etc/docker/profile/.bashrc:/root/.bashrc
+      #- ./docker/dist/profile:/root:delegated
+      - ./var/log/php:/var/log/php/
+    links:
+      - postgres
