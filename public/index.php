@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 include "order.php";
 
-$myOrder2 = Order::getOrderById2(1);
+$myOrder2 = Order::getOrderById(3);
 
 if(!empty($myOrder2->rpo)) {
     $rpo = $myOrder2->rpo;

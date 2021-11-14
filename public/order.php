@@ -58,12 +58,17 @@ class Order {
         return $this->productCost + $this->deliveryCost;
     }
 
-    public static function getOrderById2($id) {
+    public static function getOrderById($id) {
         $order = Order::ORDERS[$id];
-        if (!empty($order[3])) {
-            return new RussianPostOrder($order[0], $order[1],$order[2],$order[3]);
+
+        if (array_key_exists($id,self::ORDERS)) {
+            if (!empty($order[3])) {
+                return new RussianPostOrder($order[0], $order[1], $order[2], $order[3]);
+            } else {
+                return new Order($order[0], $order[1], $order[2]);
+            }
         } else {
-            return new Order($order[0],$order[1],$order[2]);
+            throw new Exception("Id not found");
         }
     }
 
