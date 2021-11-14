@@ -16,10 +16,12 @@ services:
   postgres:
     build: etc/docker/postgres
     ports:
-    - "5432:5432"
+      - "5432:5432"
     environment:
+      POSTGRES_DB: phpls
       POSTGRES_PASSWORD: 123
     volumes:
+#      - "./etc/docker/postgres/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/"
       - "./var/dist/postgres:/var/lib/postgresql/data"
 
   app:
