@@ -34,15 +34,6 @@ error_reporting(E_ALL);
  *  с инфой что это за заказ, на какую сумму и какой статус
  */
 
-$orders = [
-    '1' => [100,200,'delivered',123456],
-    '2' => [200,100,'send',324256]
-];
-
-const ORDERS = [
-    '1' => [100,200,'delivered',123456],
-    '2' => [200,100,'send',324256]
-];
 
 class Order {
 
@@ -87,18 +78,8 @@ class RussianPostOrder extends Order {
         parent::__construct($productCost,$deliveryCost,$orderStatus);
         $this->rpo = $rpo;
     }
-
-    public static function getOrderById($id) { // вот шо это, куда пихнуть? если в класс рашн пост, то как из под него себя же дергать?
-        $order = RussianPostOrder::ORDERS[$id];
-        return new RussianPostOrder($order[0],$order[1],$order[2],$order[3]); // как это сделать красиво?
-    }
-
 }
 
-//function getOrderById($id) { // вот шо это, куда пихнуть? если в класс рашн пост, то как из под него себя же дергать?
-//    $order = RussianPostOrder::ORDERS[$id];
-//    return new RussianPostOrder($order[0],$order[1],$order[2],$order[3]); // как это сделать красиво?
-//}
 
 
 
