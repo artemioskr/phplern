@@ -39,7 +39,17 @@ $orders = [
     '2' => [200,100,'send',324256]
 ];
 
+const ORDERS = [
+    '1' => [100,200,'delivered',123456],
+    '2' => [200,100,'send',324256]
+];
+
 class Order {
+
+    const ORDERS = [
+        '1' => [100,200,'delivered',123456],
+        '2' => [200,100,'send']
+    ];
 
     public $productCost;
     public $deliveryCost;
@@ -57,23 +67,25 @@ class Order {
         return $this->productCost + $this->deliveryCost;
     }
 
+    public static function getOrderById2($id) {
+        $order = Order::ORDERS[$id];
+        if (!empty($order[3])) {
+            return new RussianPostOrder($order[0], $order[1],$order[2],$order[3]);
+        } else {
+            return new Order($order[0],$order[1],$order[2]);
+        }
+    }
+
 }
 
 class RussianPostOrder extends Order {
 
     public $rpo;
 
-    const ORDERS = [
-        '1' => [100,200,'delivered',123456],
-        '2' => [200,100,'send',324256]
-    ];
-
     public function __construct($productCost, $deliveryCost, $orderStatus, $rpo)
     {
-        $this->productCost  = $productCost;
-        $this->deliveryCost = $deliveryCost;
-        $this->orderStatus  = $orderStatus;
-        $this->rpo          = $rpo;
+        parent::__construct($productCost,$deliveryCost,$orderStatus);
+        $this->rpo = $rpo;
     }
 
     public static function getOrderById($id) { // вот шо это, куда пихнуть? если в класс рашн пост, то как из под него себя же дергать?
@@ -88,19 +100,7 @@ class RussianPostOrder extends Order {
 //    return new RussianPostOrder($order[0],$order[1],$order[2],$order[3]); // как это сделать красиво?
 //}
 
-$myOrder = new Order(250,100,"delivered", 182381283);
-$fullCostMyOrder = $myOrder->fullCost();
-$myOrder2 = RussianPostOrder::getOrderById('2');
-if(!empty($myOrder->rpo)) {
-    $rpo = $myOrder->rpo;
-    }
-    else { $rpo = "хз"; }
 
 
-//echo "Ваш заказ: <br><br>
-//      ШПИ:$rpo <br>
-//      Стоимость товара: $myOrder2->productCost <br>
-//      Стоимость доставки: $myOrder2->deliveryCost <br>
-//      Статус заказа: $myOrder2->orderStatus <br>
-//      <br>
-//      Полная стоимость заказа: $fullCostMyOrder <br>"  ;
+
+
