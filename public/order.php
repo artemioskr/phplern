@@ -59,7 +59,7 @@ class Order {
     }
 
     public static function getOrderById($id) {
-        $order = Order::ORDERS[$id];
+        $order = self::ORDERS[$id];
 
         if (array_key_exists($id,self::ORDERS)) {
             if (!empty($order[3])) {
